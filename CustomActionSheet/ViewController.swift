@@ -17,9 +17,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func showActionSheetTapped(_ sender: UIButton) {
-        let actionController = ActionSheetController(title: "What Do You Want To Do?", message: "Any action you take cannot be undone, especially if it's destructive.")
+        let title = "What action would you like to take?"
+        let message = "This is a message to provide a little more context."
         
-        for index in 0...2 {
+        let actionController = ActionSheetController(title: title, message: message)
+        
+        for index in 1...3 {
             let testAction = Action(title: "Button Index: \(index)", style: .default) { _ in
                 print("Test Action \(index) Tapped")
             }
