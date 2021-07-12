@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         
         let actionController = ActionSheetController(title: title, message: message)
         
-        for index in 1...3 {
+        for index in 1...5 {
             let testAction = Action(title: "Button Index: \(index)", style: .default) { _ in
                 print("Test Action \(index) Tapped")
             }

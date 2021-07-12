@@ -36,7 +36,7 @@ extension UIView {
 // MARK: -  Rounded Corners
 
 extension UIView {
-
+    
     /// Applies rounded corners with masking to specific corners and with corner curve option.
     func roundCornersWithMask(cornerRadius: CGFloat,
                               roundedStyle: CALayerCornerCurve = .continuous,
@@ -66,5 +66,25 @@ extension UIView {
             self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(insets?.bottom ?? 0)),
             self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets?.left ?? 0),
         ])
+    }
+    
+    
+    
+    /// Sets `translatesAutoresizingMaskIntoConstraints` to false.
+    ///
+    ///     // Example Usage:
+    ///
+    ///     private lazy var captionLabel: UILabel = {
+    ///         let label = UILabel().forAutoLayout()
+    ///         label.text = viewModel.captionText
+    ///         label.textAlignment = .center
+    ///         return label
+    ///     }
+    ///
+    /// - Returns: `Self` for the convenience of inline chaining.
+    ///
+    func forAutoLayout() -> Self {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        return self
     }
 }

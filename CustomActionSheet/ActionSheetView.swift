@@ -27,16 +27,14 @@ public class ActionSheetView: ProgrammaticUIView {
     var actionsContentAlignment: NSTextAlignment = .center
     
     private lazy var container: UIView = {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
+        let container = UIView().forAutoLayout()
         container.backgroundColor = .clear
         container.curveCorners(radius: 20.0)
         return container
     }()
     
     private lazy var contentStackView: UIStackView = {
-        let stackview = UIStackView()
-        stackview.translatesAutoresizingMaskIntoConstraints = false
+        let stackview = UIStackView().forAutoLayout()
         stackview.axis = .vertical
         stackview.distribution = .fill
         stackview.alignment = .fill
@@ -51,28 +49,27 @@ public class ActionSheetView: ProgrammaticUIView {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel().forAutoLayout()
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
         label.numberOfLines = 0
         label.text = sheetTitle
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var messageLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel().forAutoLayout()
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 15.0)
         label.numberOfLines = 0
         label.text = sheetMessage
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var divider: UIView = {
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
+        let divider = UIView().forAutoLayout()
         divider.backgroundColor = UIColor(red: 0.58, green: 0.58, blue: 0.60, alpha: 1.0)
         divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         divider.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -86,16 +83,12 @@ public class ActionSheetView: ProgrammaticUIView {
     }()
     
     private lazy var contentStackViewContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let view = UIView().forAutoLayout()
         return view
     }()
     
     private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.alwaysBounceHorizontal = false
-        scrollView.alwaysBounceVertical = true
+        let scrollView = UIScrollView().forAutoLayout()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
@@ -111,7 +104,6 @@ public class ActionSheetView: ProgrammaticUIView {
         contentStackView.addArrangedSubview(cancelAction)
         contentStackView.setCustomSpacing(16.0, after: titleLabel)
         contentStackView.setCustomSpacing(20.0, after: messageLabel)
-        scrollView.resizeScrollViewContentSize()
     }
     
     public override func configure() {
@@ -119,55 +111,30 @@ public class ActionSheetView: ProgrammaticUIView {
     }
     
     public override func layout() {
-        layoutWithoutScrollView()
+        layoutWithScrollView()
     }
     
     
     // MARK: -  Layout
     
     private func layoutWithScrollView() {
-        // All the commented out code is stuff that I tried
-        // When using this, comment out line 107 - don't add the cancelAction to the stackview
+        let inset: CGFloat = 16.0
+        // FIXME: Fix bottom inset changing when orientation changes.
+        // When making the numbers different according to orientation, they're not getting respected.
+        let bottomInset: CGFloat = traitCollection.verticalSizeClass == .compact ? 28.0 : 28.0
+        let stackViewInsets = UIEdgeInsets(top: inset, left: inset, bottom: bottomInset, right: inset)
         
-        addSubview(scrollView)
-        addSubview(cancelAction)
-        cancelAction.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.pin(to: self)
+        contentStackView.pin(to: scrollView, withInsets: stackViewInsets)
         
-        contentStackViewContainer.pin(to: scrollView)
-        contentStackViewContainer.addSubview(contentStackView)
-        contentStackView.pin(to: contentStackViewContainer, withInsets: .init(top: 16, left: 16, bottom: 16, right: 16))
+        let scrollViewHeightConstraint = scrollView.heightAnchor.constraint(equalTo: contentStackView.heightAnchor,
+                                                                            constant: bottomInset + inset)
+        scrollViewHeightConstraint.priority = .defaultHigh
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: cancelAction.topAnchor, constant: -16),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            cancelAction.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            cancelAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            cancelAction.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32),
+            scrollView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor, constant: inset * 2),
+            scrollViewHeightConstraint
         ])
-//        scrollView.pin(to: self)
-//        contentStackViewContainer.pin(to: scrollView)
-//        contentStackView.pin(to: contentStackViewContainer, withInsets: UIEdgeInsets(top: 16.0, left: 16.0, bottom: 32.0, right: 16.0))
-        
-        scrollView.widthAnchor.constraint(equalTo: contentStackViewContainer.widthAnchor).isActive = true
-        scrollView.heightAnchor.constraint(equalTo: contentStackViewContainer.heightAnchor).isActive = true
-        cancelAction.setContentCompressionResistancePriority(.required, for: .vertical)
-
-//        scrollView.addSubview(contentStackView)
-//        contentStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        
-//        contentStackViewContainer.addSubview(titleLabel)
-//        contentStackViewContainer.addSubview(contentStackView)
-    
-//        NSLayoutConstraint.activate([
-//            contentStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
-//            contentStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-//            contentStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-//            contentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -32),
-//        ])
-//        contentStackView.pin(to: self, withInsets: UIEdgeInsets(top: 16.0, left: 16.0, bottom: 32.0, right: 16.0))
     }
     
     private func layoutWithoutScrollView() {
@@ -205,19 +172,5 @@ public class ActionSheetView: ProgrammaticUIView {
         let attrString = NSMutableAttributedString(string: message)
         attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         return attrString
-    }
-}
-
-// Got this from SO in hopes that it would take care of the sizing of the scrollview
-extension UIScrollView {
-
-    func resizeScrollViewContentSize() {
-        var contentRect = CGRect.zero
-        
-        for view in self.subviews {
-            contentRect = contentRect.union(view.frame)
-        }
-        
-        self.contentSize = contentRect.size
     }
 }
