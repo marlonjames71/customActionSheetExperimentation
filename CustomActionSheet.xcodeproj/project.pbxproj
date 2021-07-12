@@ -113,6 +113,7 @@
 				86DF0F8C268276AE00F554E4 /* ProgrammaticUIView.swift */,
 				86DF0F8E2682820C00F554E4 /* ProgrammaticUIViewController.swift */,
 				86DF0F90268282AD00F554E4 /* UIView+Helpers.swift */,
+				86DF0F8326813F4800F554E4 /* UIViewController+Helpers.swift */,
 				86DF0F942682DACE00F554E4 /* UIStackview+Helpers.swift */,
 				86E4C035268E6E4A00166E11 /* CACornerMask+Ext.swift */,
 			);
@@ -132,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				86DF0F9226829C1B00F554E4 /* ModalPresentationController.swift */,
-				86DF0F8326813F4800F554E4 /* UIViewController+Helpers.swift */,
 				86E4C037269018ED00166E11 /* CustomPresentable.swift */,
 			);
 			path = "Presentation+Transition";
