@@ -137,13 +137,6 @@ public class ActionSheetView: ProgrammaticUIView {
         ])
     }
     
-    private func layoutWithoutScrollView() {
-        // Uncomment line 107 - add back in, the cancel action to the stackview
-        // Can't add more than 2 or 3 actions or it elements get cut off
-        // This is what I'm trying to solve with the scrollview
-        contentStackView.pin(to: self, withInsets: .init(top: 16, left: 16, bottom: 32, right: 16))
-    }
-    
     
     // MARK: -  Methods
     
