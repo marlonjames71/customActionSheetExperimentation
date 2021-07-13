@@ -20,7 +20,7 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     
     private var state: State = .default
     
-    typealias ConfirmationPosition = ActionSheetView.CancelActionPosition
+    public typealias ConfirmationPosition = ActionSheetView.CancelActionPosition
     
     public var actionSheetConfirmationTitle: String?
     public var actionSheetTitle: String?
@@ -35,6 +35,11 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     
     private(set) var actions: [Action] = []
 
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            self.actionSheetView.flashScrollIndicatorsOnAppear()
+        }
+    }
     
     // MARK: -  Init
     
@@ -48,6 +53,9 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         view = actionSheetView
     }
     
+    
+    // MARK: -  Lifecycle
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkHasValidNumberOfCancelActions()
@@ -56,6 +64,11 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         actionSheetView.headerContentAlignment = headerContentAlignment
         actionSheetView.cancelConfirmationActionPosition = cancelConfirmationActionPosition
         actionSheetView.layoutSubviews()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        actionSheetView.flashScrollIndicatorsOnAppear()
     }
     
     

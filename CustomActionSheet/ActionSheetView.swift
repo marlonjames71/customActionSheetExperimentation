@@ -98,7 +98,7 @@ public class ActionSheetView: ProgrammaticUIView {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView().forAutoLayout()
-        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = true
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
@@ -177,6 +177,10 @@ public class ActionSheetView: ProgrammaticUIView {
         cancelAction = button
     }
     
+    func flashScrollIndicatorsOnAppear() {
+        scrollView.flashScrollIndicators()
+    }
+    
     func updateSheetForConfirmationState(newTitle: String,
                                          newMessage: String?,
                                          confirmationButton: ScaleOnPressButton) {
@@ -202,6 +206,7 @@ public class ActionSheetView: ProgrammaticUIView {
         guard let confirmationButton = self.confirmationButton else { return }
         confirmationButton.alpha = 0.0
         confirmationButton.isHidden = true
+        
         self.confirmationContentStackView.addArrangedSubview(confirmationButton)
         
         confirmationButton.alpha = 1.0

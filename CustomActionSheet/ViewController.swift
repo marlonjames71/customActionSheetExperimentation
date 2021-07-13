@@ -9,11 +9,18 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet private weak var actionLabel: UILabel!
+    @IBOutlet weak var headerContentAlignment: UISegmentedControl!
+    @IBOutlet weak var actionButtonsAlignment: UISegmentedControl!
+    @IBOutlet weak var cancelConfirmationButtonAlignment: UISegmentedControl!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+        
+        headerContentAlignment.selectedSegmentIndex = 1
+        actionButtonsAlignment.selectedSegmentIndex = 1
+        cancelConfirmationButtonAlignment.selectedSegmentIndex = 1
     }
 
     @IBAction private func showActionSheetTapped(_ sender: UIButton) {
@@ -23,11 +30,11 @@ class ViewController: UIViewController {
 //        let message = ""
         
         let actionController = ActionSheetController(title: title, message: message)
-        actionController.headerContentAlignment = .left
-        actionController.actionsContentAlignment = .left
-        actionController.cancelConfirmationActionPosition = .right
+        actionController.headerContentAlignment = headerContentAlignment.selectedSegmentIndex == 0 ? .left : .center
+        actionController.actionsContentAlignment = actionButtonsAlignment.selectedSegmentIndex == 0 ? .left : .center
+        actionController.cancelConfirmationActionPosition = cancelConfirmationButtonAlignment.selectedSegmentIndex == 0 ? .left : .right
         
-        for index in 1...4 {
+        for index in 1...12 {
             let testAction = Action(title: "Button Index: \(index)", style: .default) { _ in
                 print("Test Action \(index) Tapped")
             }
