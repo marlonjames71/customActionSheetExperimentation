@@ -16,7 +16,7 @@ public class ActionSheetView: ProgrammaticUIView {
     public enum CancelActionPosition {
         case right, left
         
-        static var defaultPosition: Self {
+        public static var defaultPosition: Self {
             .right
         }
     }
