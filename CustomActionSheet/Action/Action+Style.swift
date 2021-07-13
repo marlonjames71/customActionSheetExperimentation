@@ -35,7 +35,8 @@ extension Action {
         /// - Parameters:
         ///     - title: Updates the `ActionSheetController`'s title to better match the context for the confirmation.
         ///     - message: Updates the `ActionSheetController`'s message to better match the context for the confirmation.
-        case hasConfirmation(title: String?, message: String?)
+        ///     - confirmationTitle: The title of the button that sends the action while in a confirmation state. If it is`nil`, the button's title before the confirmation will be used.
+        case hasConfirmation(newSheetTitle: String, newSheetMessage: String?, confirmationActionTitle: String?)
         
         /// Initially displays the the `ActionSheetController` in the confirmation style.
         case isConfirmation

@@ -20,12 +20,16 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     
     private var state: State = .default
     
+    typealias ConfirmationPosition = ActionSheetView.CancelActionPosition
+    
     public var actionSheetConfirmationTitle: String?
     public var actionSheetTitle: String?
     public var actionSheetMessage: String?
     public var tintColor: UIColor?
     public var cornerRadius: CGFloat?
-    public var actionsContentAlignment: ActionsContentAlignment = .center
+    public var headerContentAlignment: NSTextAlignment = .center
+    public var actionsContentAlignment: UIControl.ContentHorizontalAlignment = .center
+    public var cancelConfirmationActionPosition: ConfirmationPosition = ConfirmationPosition.defaultPosition
     public var actionsContentFont: UIFont = .systemFont(ofSize: 15)
     public var supportsLandscape: Bool = true
     
@@ -49,6 +53,8 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         checkHasValidNumberOfCancelActions()
         configureAndSetCancelActionButton()
         configureAndSetAllOtherActionButtons()
+        actionSheetView.headerContentAlignment = headerContentAlignment
+        actionSheetView.cancelConfirmationActionPosition = cancelConfirmationActionPosition
         actionSheetView.layoutSubviews()
     }
     
@@ -97,13 +103,11 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         if let cancelAction = cancelAction {
             return cancelAction
         } else {
-            return Action(title: "Cancel", style: .cancel) { _ in
-                self.dismiss(animated: true, completion: nil)
-            }
+            return Action(title: "Cancel", style: .cancel)
         }
     }
     
-    private func generateActionButtons(from actions: [Action]) -> [UIButton] {
+    private func generateActionButtons(from actions: [Action]) -> [ScaleOnPressButton] {
         actions.map { action in
             generateButtonFromAction(action)
         }
@@ -111,15 +115,20 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     
     private func generateButtonFromAction(_ action: Action) -> ScaleOnPressButton {
         let button = ScaleOnPressButton()
+        button.contentEdgeInsets = .init(top: 5, left: 16, bottom: 5, right: 16)
         button.showHighlightedBackgroundOnPress = true
-//        button.backgroundHighlightColor = UIColor.fromHex(hex: 0x2b2b2b)
         button.backgroundHighlightColor = .secondarySystemFill
         button.backgroundDefaultColor = .secondarySystemBackground
         button.titleLabel?.font = actionsContentFont
         button.setTitle(action.actionTitle, for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.lineBreakMode = .byTruncatingMiddle
+        button.imageEdgeInsets = .init(top: 0.0, left: 0.0, bottom: 0.0, right: 12.0)
         button.layer.cornerRadius = 6.0
         button.layer.cornerCurve = .continuous
+        button.contentHorizontalAlignment = actionsContentAlignment
+        button.tintColor = .label
         button.action = action
         button.addTarget(self, action: #selector(actionButtonPressed(_:)), for: .touchUpInside)
         button.heightAnchor.constraint(equalToConstant: 48).isActive = true
@@ -127,8 +136,32 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     }
     
     @objc func actionButtonPressed(_ sender: ScaleOnPressButton) {
-        sender.runAction()
-        dismiss(animated: true, completion: nil)
+        guard let action = sender.action else { return }
+        switch action.style {
+        case .default:
+            sender.runAction()
+            dismiss(animated: true, completion: nil)
+        case .hasConfirmation(let title, let message, let confirmationTitle):
+            actionSheetView.confirmationAction = action
+            
+            let confirmationActionTitle = confirmationTitle ?? action.actionTitle
+            let confirmationAction = Action(title: confirmationActionTitle,
+                                            style: .isConfirmation,
+                                            actionHandler: action.actionHandler)
+            
+            let confirmationButton = generateButtonFromAction(confirmationAction)
+            
+            actionSheetView.updateSheetForConfirmationState(newTitle: title,
+                                                            newMessage: message,
+                                                            confirmationButton: confirmationButton)
+            actionSheetView.state = .confirmation
+        case .cancel:
+            sender.runAction()
+            dismiss(animated: true, completion: nil)
+        case .isConfirmation:
+            sender.runAction()
+            dismiss(animated: true, completion: nil)
+        }
     }
 }
 

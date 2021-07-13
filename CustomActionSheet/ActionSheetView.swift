@@ -13,6 +13,14 @@ protocol ActionSheetViewDelegate: AnyObject {
 
 public class ActionSheetView: ProgrammaticUIView {
     
+    public enum CancelActionPosition {
+        case right, left
+        
+        static var defaultPosition: Self {
+            .right
+        }
+    }
+    
     // MARK: -  Properties
     
     weak var delegate: ActionSheetViewDelegate?
@@ -25,6 +33,15 @@ public class ActionSheetView: ProgrammaticUIView {
     
     var headerContentAlignment: NSTextAlignment = .center
     var actionsContentAlignment: NSTextAlignment = .center
+    var cancelConfirmationActionPosition: CancelActionPosition = CancelActionPosition.defaultPosition
+    
+    var state: ActionSheetController.State = .default {
+        didSet {
+            updateSheetWithAnimation()
+        }
+    }
+    var confirmationAction: Action?
+    var confirmationButton: ScaleOnPressButton?
     
     private lazy var container: UIView = {
         let container = UIView().forAutoLayout()
@@ -43,8 +60,11 @@ public class ActionSheetView: ProgrammaticUIView {
     }()
     
     private lazy var confirmationContentStackView: UIStackView = {
-        let stackiew = UIStackView()
-        
+        let stackiew = UIStackView().forAutoLayout()
+        stackiew.axis = .horizontal
+        stackiew.distribution = .fillEqually
+        stackiew.alignment = .fill
+        stackiew.spacing = 0.0
         return stackiew
     }()
     
@@ -76,17 +96,6 @@ public class ActionSheetView: ProgrammaticUIView {
         return divider
     }()
     
-    private lazy var button: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.textAlignment = actionsContentAlignment
-        return button
-    }()
-    
-    private lazy var contentStackViewContainer: UIView = {
-        let view = UIView().forAutoLayout()
-        return view
-    }()
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView().forAutoLayout()
         scrollView.showsVerticalScrollIndicator = false
@@ -99,11 +108,31 @@ public class ActionSheetView: ProgrammaticUIView {
     
     public override func layoutSubviews() {
         contentStackView.addArrangedSubviews([titleLabel, messageLabel])
+        [titleLabel, messageLabel].forEach {
+            if let text = $0.text { $0.isHidden = text.isEmpty }
+        }
         contentStackView.addArrangedSubview(divider)
+        determineDividerVisibility()
         contentStackView.addArrangedSubviews(actionButtons)
-        contentStackView.addArrangedSubview(cancelAction)
+        if state == .default {
+            confirmationContentStackView.addArrangedSubview(cancelAction)
+        } else {
+            let position = cancelConfirmationActionPosition == .left ? 0 : 1
+            confirmationContentStackView.insertArrangedSubview(cancelAction, at: position)
+        }
+        contentStackView.addArrangedSubview(confirmationContentStackView)
         contentStackView.setCustomSpacing(16.0, after: titleLabel)
         contentStackView.setCustomSpacing(20.0, after: messageLabel)
+        contentStackView.setCustomSpacing(20.0, after: divider)
+        titleLabel.textAlignment = headerContentAlignment
+        messageLabel.textAlignment = headerContentAlignment
+        if state == .confirmation {
+            delegate?.setNeedsUpdatePresentationLayout()
+            for button in confirmationContentStackView.arrangedSubviews {
+                guard let button = button as? ScaleOnPressButton else { continue }
+                button.contentHorizontalAlignment = .center
+            }
+        }
     }
     
     public override func configure() {
@@ -118,10 +147,10 @@ public class ActionSheetView: ProgrammaticUIView {
     // MARK: -  Layout
     
     private func layoutWithScrollView() {
-        let inset: CGFloat = 16.0
+        let inset: CGFloat = 20.0
         // FIXME: Fix bottom inset changing when orientation changes.
         // When making the numbers different according to orientation, they're not getting respected.
-        let bottomInset: CGFloat = traitCollection.verticalSizeClass == .compact ? 28.0 : 28.0
+        let bottomInset: CGFloat = traitCollection.verticalSizeClass == .compact ? 32.0 : 32.0
         let stackViewInsets = UIEdgeInsets(top: inset, left: inset, bottom: bottomInset, right: inset)
         
         scrollView.pin(to: self)
@@ -133,14 +162,14 @@ public class ActionSheetView: ProgrammaticUIView {
         
         NSLayoutConstraint.activate([
             scrollView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor, constant: inset * 2),
-            scrollViewHeightConstraint
+            scrollViewHeightConstraint,
         ])
     }
     
     
     // MARK: -  Methods
     
-    func setActionButtons(_ buttons: [UIButton]) {
+    func setActionButtons(_ buttons: [ScaleOnPressButton]) {
         actionButtons = buttons
     }
     
@@ -148,13 +177,47 @@ public class ActionSheetView: ProgrammaticUIView {
         cancelAction = button
     }
     
-    @objc func toggleViews() {
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseOut]) {
-            self.contentStackView.arrangedSubviews[2].isHidden.toggle()
-            self.contentStackView.arrangedSubviews[3].isHidden.toggle()
+    func updateSheetForConfirmationState(newTitle: String,
+                                         newMessage: String?,
+                                         confirmationButton: ScaleOnPressButton) {
+        sheetTitle = newTitle
+        sheetMessage = newMessage
+        self.confirmationButton = confirmationButton
+    }
+    
+    private func updateSheetWithAnimation() {
+        for view in self.contentStackView.arrangedSubviews {
+            if view is ScaleOnPressButton {
+                view.alpha = 0.0
+                view.isHidden = true
+            }
         }
         
+        let titleAnimation = { self.titleLabel.text = self.sheetTitle }
+        let messageAnimation = { self.messageLabel.text = self.sheetMessage }
+
+        UIView.transition(with: titleLabel, duration: 0.12, options: [.transitionCrossDissolve], animations: titleAnimation)
+        UIView.transition(with: messageLabel, duration: 0.12, options: [.transitionCrossDissolve], animations: messageAnimation)
+        
+        guard let confirmationButton = self.confirmationButton else { return }
+        confirmationButton.alpha = 0.0
+        confirmationButton.isHidden = true
+        self.confirmationContentStackView.addArrangedSubview(confirmationButton)
+        
+        confirmationButton.alpha = 1.0
+        confirmationButton.isHidden = false
+        
         delegate?.setNeedsUpdatePresentationLayout()
+    }
+    
+    private func determineDividerVisibility() {
+        if let sheetTitle = sheetTitle,
+           let sheetMessage = sheetMessage,
+           sheetTitle.isEmpty && sheetMessage.isEmpty {
+            divider.isHidden = true
+        } else {
+            divider.isHidden = false
+        }
     }
     
     private func format(message: String) -> NSMutableAttributedString {
