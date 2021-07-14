@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CustomPresentable: UIViewController {
+public protocol CustomPresentable: UIViewController {
     var transitionManager: UIViewControllerTransitioningDelegate? { get set }
     var dismissalHandlingScrollview: UIScrollView? { get }
     func updatePresentationLayout(animated: Bool)
@@ -16,7 +16,7 @@ protocol CustomPresentable: UIViewController {
 extension CustomPresentable {
     var dismissalHandlingScrollView: UIScrollView? { nil }
     
-    func updatePresentationLayout(animated: Bool = false) {
+    public func updatePresentationLayout(animated: Bool = false) {
         presentationController?.containerView?.setNeedsLayout()
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.4, options: .allowUserInteraction, animations: {

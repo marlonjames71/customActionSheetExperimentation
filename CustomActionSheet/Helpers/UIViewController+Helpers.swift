@@ -20,7 +20,7 @@ extension UIViewController: UIViewControllerTransitioningDelegate {
     ///     - flag: Pass `true` to animate the presentation; otherwise, pass `false`.
     ///     - completion:The block to execute after the presentation finishes. This block has no return value and takes no parameters. You may specify `nil` for this parameter.
     ///
-    public func presentActionSheet(_ actionSheetControllerToPresent: ActionSheetController, animated flag: Bool, completion: (() -> Void)? = nil) {
+    public func presentActionSheet(_ actionSheetControllerToPresent: CustomPresentable, animated flag: Bool, completion: (() -> Void)? = nil) {
         actionSheetControllerToPresent.modalPresentationStyle = .custom
         actionSheetControllerToPresent.transitioningDelegate = self
         present(actionSheetControllerToPresent, animated: flag, completion: completion)

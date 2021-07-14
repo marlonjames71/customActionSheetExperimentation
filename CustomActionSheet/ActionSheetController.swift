@@ -11,8 +11,8 @@ import UIKit
 
 public class ActionSheetController: ProgrammaticUIViewController, CustomPresentable {
     
-    var transitionManager: UIViewControllerTransitioningDelegate?
-    var dismissalHandlingScrollview: UIScrollView?
+    public var transitionManager: UIViewControllerTransitioningDelegate?
+    public var dismissalHandlingScrollview: UIScrollView?
     
     // MARK: -  Properties
     
