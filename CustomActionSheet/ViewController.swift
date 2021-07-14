@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func showActionSheetTapped(_ sender: UIButton) {
-        let actionController = ActionSheetController.makeActionSheetController(
+        let actionController = ActionSheetController.makeMockActionSheetController(
             headerAlignment: headerContentAlignment.selectedSegmentIndex == 0 ? .left : .center,
             showHeaderContent: showHeaderContent.selectedSegmentIndex == 0 ? true : false,
             actionsAlignment: actionButtonsAlignment.selectedSegmentIndex == 0 ? .left : .center,

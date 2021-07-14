@@ -10,7 +10,7 @@ import UIKit
 extension ActionSheetController {
 
     /// Provides a mock action sheet controller to showcase the different variations an action sheet controller can have.
-    static func makeActionSheetController(
+    static func makeMockActionSheetController(
         headerAlignment: NSTextAlignment,
         showHeaderContent: Bool,
         actionsAlignment: UIControl.ContentHorizontalAlignment,
