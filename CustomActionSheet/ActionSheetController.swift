@@ -20,7 +20,7 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     
     private var state: State = .default
     
-    typealias ConfirmationPosition = ActionSheetView.CancelActionPosition
+    public typealias ConfirmationPosition = ActionSheetView.CancelActionPosition
     
     public var actionSheetConfirmationTitle: String?
     public var actionSheetTitle: String?
@@ -32,9 +32,15 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
     public var cancelConfirmationActionPosition: ConfirmationPosition = ConfirmationPosition.defaultPosition
     public var actionsContentFont: UIFont = .systemFont(ofSize: 15)
     public var supportsLandscape: Bool = true
+    public var cancelButtonShouldMatchActionButtonsAlignment = false
     
     private(set) var actions: [Action] = []
 
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            self.actionSheetView.flashScrollIndicatorsOnAppear()
+        }
+    }
     
     // MARK: -  Init
     
@@ -48,6 +54,9 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         view = actionSheetView
     }
     
+    
+    // MARK: -  Lifecycle
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkHasValidNumberOfCancelActions()
@@ -56,6 +65,11 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         actionSheetView.headerContentAlignment = headerContentAlignment
         actionSheetView.cancelConfirmationActionPosition = cancelConfirmationActionPosition
         actionSheetView.layoutSubviews()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        actionSheetView.flashScrollIndicatorsOnAppear()
     }
     
     
@@ -107,15 +121,17 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         }
     }
     
-    private func generateActionButtons(from actions: [Action]) -> [ScaleOnPressButton] {
+    private func generateActionButtons(from actions: [Action]) -> [ActionButton] {
         actions.map { action in
             generateButtonFromAction(action)
         }
     }
     
-    private func generateButtonFromAction(_ action: Action) -> ScaleOnPressButton {
-        let button = ScaleOnPressButton()
-        button.contentEdgeInsets = .init(top: 5, left: 16, bottom: 5, right: 16)
+    private func generateButtonFromAction(_ action: Action) -> ActionButton {
+        let button = ActionButton()
+        if actionsContentAlignment == .left {
+            button.contentEdgeInsets = .init(top: 5, left: 10, bottom: 5, right: 10)
+        }
         button.showHighlightedBackgroundOnPress = true
         button.backgroundHighlightColor = .secondarySystemFill
         button.backgroundDefaultColor = .secondarySystemBackground
@@ -124,10 +140,16 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.numberOfLines = 1
         button.titleLabel?.lineBreakMode = .byTruncatingMiddle
-        button.imageEdgeInsets = .init(top: 0.0, left: 0.0, bottom: 0.0, right: 12.0)
+        button.setImage(action.image, for: .normal)
+        button.titleEdgeInsets = .init(top: .zero, left: action.image != nil ? 12.0 : 5.0, bottom: .zero, right: .zero)
         button.layer.cornerRadius = 6.0
         button.layer.cornerCurve = .continuous
-        button.contentHorizontalAlignment = actionsContentAlignment
+        button.titleLabel?.font = action.style == .cancel ? .systemFont(ofSize: 16, weight: .medium) : .systemFont(ofSize: 16, weight: .regular)
+        if action.style == .cancel {
+            button.contentHorizontalAlignment = cancelButtonShouldMatchActionButtonsAlignment ? actionsContentAlignment : .center
+        } else {
+            button.contentHorizontalAlignment = actionsContentAlignment
+        }
         button.tintColor = .label
         button.action = action
         button.addTarget(self, action: #selector(actionButtonPressed(_:)), for: .touchUpInside)
@@ -135,7 +157,7 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
         return button
     }
     
-    @objc func actionButtonPressed(_ sender: ScaleOnPressButton) {
+    @objc func actionButtonPressed(_ sender: ActionButton) {
         guard let action = sender.action else { return }
         switch action.style {
         case .default:

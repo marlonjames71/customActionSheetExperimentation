@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ScaleOnPressButton: UIButton {
+class ActionButton: UIButton {
     
     var backgroundDefaultColor: UIColor?
     var backgroundHighlightColor: UIColor?

@@ -64,7 +64,7 @@ class ModalPresentationController: UIPresentationController {
         // The below commented out property makes the view float when in landscape
         // Needs the view to round all corners
         // Needs the first vale in the `topSpacing` ternary operator to be 0.93 instead of 0.97
-        //        let inset: CGFloat = traitCollection.verticalSizeClass == .compact ? 16 : 0
+//        let inset: CGFloat = traitCollection.verticalSizeClass == .compact ? 16 : 0
         let inset: CGFloat = 0
         let verticalInset = inset == 0 ? 0 : containerView.safeAreaInsets.bottom// + inset
         let width = min(containerView.bounds.width, containerView.bounds.height) - 2 * inset

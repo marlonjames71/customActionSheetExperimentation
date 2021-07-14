@@ -22,7 +22,7 @@
 		86DF0F91268282AD00F554E4 /* UIView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F90268282AD00F554E4 /* UIView+Helpers.swift */; };
 		86DF0F9326829C1B00F554E4 /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F9226829C1B00F554E4 /* ModalPresentationController.swift */; };
 		86DF0F952682DACE00F554E4 /* UIStackview+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F942682DACE00F554E4 /* UIStackview+Helpers.swift */; };
-		86DF0F972683816300F554E4 /* ScaleOnPressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F962683816300F554E4 /* ScaleOnPressButton.swift */; };
+		86DF0F972683816300F554E4 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F962683816300F554E4 /* ActionButton.swift */; };
 		86E4C02F268CEE2D00166E11 /* Action+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4C02E268CEE2D00166E11 /* Action+Style.swift */; };
 		86E4C036268E6E4A00166E11 /* CACornerMask+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4C035268E6E4A00166E11 /* CACornerMask+Ext.swift */; };
 		86E4C038269018ED00166E11 /* CustomPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4C037269018ED00166E11 /* CustomPresentable.swift */; };
@@ -46,7 +46,7 @@
 		86DF0F90268282AD00F554E4 /* UIView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Helpers.swift"; sourceTree = "<group>"; };
 		86DF0F9226829C1B00F554E4 /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
 		86DF0F942682DACE00F554E4 /* UIStackview+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackview+Helpers.swift"; sourceTree = "<group>"; };
-		86DF0F962683816300F554E4 /* ScaleOnPressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleOnPressButton.swift; sourceTree = "<group>"; };
+		86DF0F962683816300F554E4 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		86E4C02E268CEE2D00166E11 /* Action+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Action+Style.swift"; sourceTree = "<group>"; };
 		86E4C035268E6E4A00166E11 /* CACornerMask+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Ext.swift"; sourceTree = "<group>"; };
 		86E4C037269018ED00166E11 /* CustomPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentable.swift; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		86E4C034268CF1E300166E11 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				86DF0F962683816300F554E4 /* ScaleOnPressButton.swift */,
+				86DF0F962683816300F554E4 /* ActionButton.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -223,7 +223,7 @@
 				86DF0F872682695500F554E4 /* Action.swift in Sources */,
 				86DF0F9326829C1B00F554E4 /* ModalPresentationController.swift in Sources */,
 				86DF0F8D268276AE00F554E4 /* ProgrammaticUIView.swift in Sources */,
-				86DF0F972683816300F554E4 /* ScaleOnPressButton.swift in Sources */,
+				86DF0F972683816300F554E4 /* ActionButton.swift in Sources */,
 				86DF0F7226813D5500F554E4 /* ViewController.swift in Sources */,
 				86DF0F6E26813D5500F554E4 /* AppDelegate.swift in Sources */,
 				86DF0F8426813F4800F554E4 /* UIViewController+Helpers.swift in Sources */,

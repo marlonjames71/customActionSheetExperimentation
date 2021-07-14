@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="landscape" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,11 +13,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CustomActionSheet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EiV-D4-PV1">
-                                <rect key="frame" x="110.66666666666669" y="622" width="169" height="38"/>
+                                <rect key="frame" x="337.66666666666669" y="281" width="169" height="38"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                 <state key="normal" title="Show Action Sheet">
@@ -32,30 +32,111 @@
                                     <action selector="showActionSheetTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vbI-cZ-f8J"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewG-ji-mMP">
-                                <rect key="frame" x="30" y="194" width="330" height="22"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Waiting on action...">
-                                        <attributes>
-                                            <font key="NSFont" size="16" name="AvenirNext-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=compact-widthClass=regular" insetsLayoutMarginsFromSafeArea="YES"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="a8z-oO-VOh">
+                                <rect key="frame" x="147" y="49.999999999999986" width="550" height="169.66666666666663"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DpP-5a-JbI">
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Content Alignment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="4zU-ia-Tl3">
+                                                <rect key="frame" x="0.0" y="5.3333333333333357" width="334" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ind-q1-aS5">
+                                                <rect key="frame" x="350" y="0.0" width="200" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="lET-YE-pU4"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title=".left"/>
+                                                    <segment title=".center"/>
+                                                </segments>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ukO-jm-0iA">
+                                        <rect key="frame" x="0.0" y="43" width="550" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Buttons Alignment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="WsT-Et-Hdr">
+                                                <rect key="frame" x="0.0" y="5.3333333333333286" width="334" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4pt-4G-4iQ">
+                                                <rect key="frame" x="350" y="0.0" width="200" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="lAz-Fp-ph5"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title=".left"/>
+                                                    <segment title=".center"/>
+                                                </segments>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="FdP-Ef-XhF">
+                                        <rect key="frame" x="0.0" y="86" width="550" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel Confirmation Button Alignment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="QEy-6R-RtA">
+                                                <rect key="frame" x="0.0" y="5.3333333333333428" width="334" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JKf-8x-zeO">
+                                                <rect key="frame" x="350" y="0.0" width="200" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="wN6-eA-6mB"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title=".left"/>
+                                                    <segment title=".right"/>
+                                                </segments>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="29G-oy-eov">
+                                        <rect key="frame" x="0.0" y="129" width="550" height="40.666666666666657"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel Button Matches Action Buttons Alignment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="slg-qT-gqv">
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="40.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="i66-JL-XAS">
+                                                <rect key="frame" x="350" y="5" width="200" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="LJo-US-qyc"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="true"/>
+                                                    <segment title="false"/>
+                                                </segments>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="kow-wY-wHN">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="550"/>
+                                        <variation key="heightClass=compact-widthClass=regular" constant="550"/>
+                                    </constraint>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ewG-ji-mMP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Hi5-xT-eNC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ewG-ji-mMP" secondAttribute="trailing" constant="30" id="OEN-MA-RLC"/>
-                            <constraint firstItem="EiV-D4-PV1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="crU-lR-m5d"/>
-                            <constraint firstItem="ewG-ji-mMP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="150" id="iwE-xc-U96">
+                            <constraint firstItem="a8z-oO-VOh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="4d1-jc-Szz">
                                 <variation key="heightClass=compact-widthClass=compact" constant="50"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="50"/>
                             </constraint>
+                            <constraint firstItem="a8z-oO-VOh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pw8-mA-wod"/>
+                            <constraint firstItem="EiV-D4-PV1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="crU-lR-m5d"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EiV-D4-PV1" secondAttribute="bottom" constant="150" id="z4x-NH-4oC">
                                 <variation key="heightClass=compact-widthClass=compact" constant="50"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="50"/>
@@ -63,12 +144,15 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="actionLabel" destination="ewG-ji-mMP" id="lmJ-kF-jB7"/>
+                        <outlet property="actionButtonsAlignment" destination="4pt-4G-4iQ" id="qM0-Qi-0ic"/>
+                        <outlet property="cancelButtonMatchAlignment" destination="i66-JL-XAS" id="Eof-aM-XNG"/>
+                        <outlet property="cancelConfirmationButtonAlignment" destination="JKf-8x-zeO" id="xB2-4Z-cGi"/>
+                        <outlet property="headerContentAlignment" destination="ind-q1-aS5" id="FX0-rI-KTV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="116"/>
+            <point key="canvasLocation" x="130.76923076923077" y="115.87677725118483"/>
         </scene>
     </scenes>
     <resources>

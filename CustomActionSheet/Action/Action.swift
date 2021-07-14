@@ -49,6 +49,10 @@ public class Action: NSObject, UIAccessibilityIdentification {
     public var isEnabled: Bool = true
     
     
+    #warning("Write documentation!")
+    public var image: UIImage?
+    
+    
     // MARK: -  Init
     
     /// Create and return an action with the specified title and behavior.
@@ -63,10 +67,11 @@ public class Action: NSObject, UIAccessibilityIdentification {
     ///     action object as its only parameter. A block to execute when the user selects an action. If the action's style is `.hasConfirmation`,
     ///     the execution of the block will be delayed until the action is confirmed.
     ///
-    public convenience init(title: String?, style: Action.Style = .default, actionHandler: ((Action) -> Void)? = nil) {
+    public convenience init(title: String?, style: Action.Style = .default, image: UIImage? = nil, actionHandler: ((Action) -> Void)? = nil) {
         self.init()
         self.actionTitle = title
         self.style = style
+        self.image = image
         self.actionHandler = actionHandler
         
         self.accessibilityIdentifier = actionTitle
