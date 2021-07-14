@@ -108,31 +108,18 @@ public class ActionSheetView: ProgrammaticUIView {
     
     public override func layoutSubviews() {
         contentStackView.addArrangedSubviews([titleLabel, messageLabel])
-        [titleLabel, messageLabel].forEach {
-            if let text = $0.text { $0.isHidden = text.isEmpty }
-        }
+        determineHeaderContentVisibility()
         contentStackView.addArrangedSubview(divider)
         determineDividerVisibility()
         contentStackView.addArrangedSubviews(actionButtons)
-        if state == .default {
-            confirmationContentStackView.addArrangedSubview(cancelAction)
-        } else {
-            let position = cancelConfirmationActionPosition == .left ? 0 : 1
-            confirmationContentStackView.insertArrangedSubview(cancelAction, at: position)
-        }
+        addCancelActionAndDeterminePosition()
         contentStackView.addArrangedSubview(confirmationContentStackView)
         contentStackView.setCustomSpacing(16.0, after: titleLabel)
         contentStackView.setCustomSpacing(20.0, after: messageLabel)
         contentStackView.setCustomSpacing(20.0, after: divider)
         titleLabel.textAlignment = headerContentAlignment
         messageLabel.textAlignment = headerContentAlignment
-        if state == .confirmation {
-            delegate?.setNeedsUpdatePresentationLayout()
-            for button in confirmationContentStackView.arrangedSubviews {
-                guard let button = button as? ActionButton else { continue }
-                button.contentHorizontalAlignment = .center
-            }
-        }
+        determineConfirmationActionAlignment()
     }
     
     public override func configure() {
@@ -214,14 +201,46 @@ public class ActionSheetView: ProgrammaticUIView {
         
         delegate?.setNeedsUpdatePresentationLayout()
     }
+
+    private func determineHeaderContentVisibility() {
+        [titleLabel, messageLabel].forEach {
+            if let text = $0.text {
+                $0.isHidden = text.isEmpty
+                $0.alpha = text.isEmpty ? 0 : 1
+            } else {
+                $0.alpha = 0
+            }
+        }
+    }
     
     private func determineDividerVisibility() {
         if let sheetTitle = sheetTitle,
            let sheetMessage = sheetMessage,
            sheetTitle.isEmpty && sheetMessage.isEmpty {
             divider.isHidden = true
+            divider.alpha = 0
         } else {
             divider.isHidden = false
+            divider.alpha = 1
+        }
+    }
+
+    private func addCancelActionAndDeterminePosition() {
+        if state == .default {
+            confirmationContentStackView.addArrangedSubview(cancelAction)
+        } else {
+            let position = cancelConfirmationActionPosition == .left ? 0 : 1
+            confirmationContentStackView.insertArrangedSubview(cancelAction, at: position)
+        }
+    }
+
+    private func determineConfirmationActionAlignment() {
+        if state == .confirmation {
+            delegate?.setNeedsUpdatePresentationLayout()
+            for button in confirmationContentStackView.arrangedSubviews {
+                guard let button = button as? ActionButton else { continue }
+                button.contentHorizontalAlignment = .center
+            }
         }
     }
     

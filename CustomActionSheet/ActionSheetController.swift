@@ -126,7 +126,7 @@ public class ActionSheetController: ProgrammaticUIViewController, CustomPresenta
             generateButtonFromAction(action)
         }
     }
-    
+
     private func generateButtonFromAction(_ action: Action) -> ActionButton {
         let button = ActionButton()
         if actionsContentAlignment == .left {

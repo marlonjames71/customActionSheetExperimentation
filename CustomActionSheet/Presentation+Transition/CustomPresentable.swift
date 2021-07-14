@@ -19,7 +19,7 @@ extension CustomPresentable {
     func updatePresentationLayout(animated: Bool = false) {
         presentationController?.containerView?.setNeedsLayout()
         if animated {
-            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .allowUserInteraction, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.4, options: .allowUserInteraction, animations: {
                 self.presentationController?.containerView?.layoutIfNeeded()
             }, completion: nil)
         } else {
