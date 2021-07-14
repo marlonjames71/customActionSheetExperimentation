@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func showActionSheetTapped(_ sender: UIButton) {
-        let actionController = ActionSheetController.makeMockActionSheetController(
+        let actionSheetController = ActionSheetController.makeMockActionSheetController(
             headerAlignment: headerContentAlignment.selectedSegmentIndex == 0 ? .left : .center,
             showHeaderContent: showHeaderContent.selectedSegmentIndex == 0 ? true : false,
             actionsAlignment: actionButtonsAlignment.selectedSegmentIndex == 0 ? .left : .center,
@@ -38,6 +38,6 @@ class ViewController: UIViewController {
             cancelMatchesActionAlignment: cancelButtonMatchAlignment.selectedSegmentIndex == 0 ? true : false,
             showIcons: showIcons.selectedSegmentIndex == 0 ? true : false
         )
-        presentActionSheet(actionController, animated: true)
+        presentActionSheet(actionSheetController, animated: true)
     }
 }
