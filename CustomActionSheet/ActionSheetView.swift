@@ -41,7 +41,7 @@ public class ActionSheetView: ProgrammaticUIView {
         }
     }
     var confirmationAction: Action?
-    var confirmationButton: ScaleOnPressButton?
+    var confirmationButton: ActionButton?
     
     private lazy var container: UIView = {
         let container = UIView().forAutoLayout()
@@ -129,7 +129,7 @@ public class ActionSheetView: ProgrammaticUIView {
         if state == .confirmation {
             delegate?.setNeedsUpdatePresentationLayout()
             for button in confirmationContentStackView.arrangedSubviews {
-                guard let button = button as? ScaleOnPressButton else { continue }
+                guard let button = button as? ActionButton else { continue }
                 button.contentHorizontalAlignment = .center
             }
         }
@@ -169,7 +169,7 @@ public class ActionSheetView: ProgrammaticUIView {
     
     // MARK: -  Methods
     
-    func setActionButtons(_ buttons: [ScaleOnPressButton]) {
+    func setActionButtons(_ buttons: [ActionButton]) {
         actionButtons = buttons
     }
     
@@ -183,7 +183,7 @@ public class ActionSheetView: ProgrammaticUIView {
     
     func updateSheetForConfirmationState(newTitle: String,
                                          newMessage: String?,
-                                         confirmationButton: ScaleOnPressButton) {
+                                         confirmationButton: ActionButton) {
         sheetTitle = newTitle
         sheetMessage = newMessage
         self.confirmationButton = confirmationButton
@@ -191,7 +191,7 @@ public class ActionSheetView: ProgrammaticUIView {
     
     private func updateSheetWithAnimation() {
         for view in self.contentStackView.arrangedSubviews {
-            if view is ScaleOnPressButton {
+            if view is ActionButton {
                 view.alpha = 0.0
                 view.isHidden = true
             }
