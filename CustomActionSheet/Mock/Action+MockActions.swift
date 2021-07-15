@@ -1,32 +1,20 @@
 //
-//  ActionSheetController+MockController.swift
+//  Action+MockActions.swift
 //  CustomActionSheet
 //
-//  Created by Marlon Raskin on 7/14/21.
+//  Created by Raskin, Marlon on 7/14/21.
 //
 
 import UIKit
 
-extension ActionSheetController {
-
-    /// Provides a mock action sheet controller to showcase the different variations an action sheet controller can have.
-    static func makeMockActionSheetController(
-        headerAlignment: NSTextAlignment,
-        showHeaderContent: Bool,
-        actionsAlignment: UIControl.ContentHorizontalAlignment,
-        cancelConfirmationPosition: ActionSheetController.ConfirmationPosition,
-        cancelMatchesActionAlignment: Bool,
-        showIcons: Bool) -> ActionSheetController {
-        
-        let title = showHeaderContent ? "Which Mac Pro would you like to buy?" : ""
-        let message = showHeaderContent ? "You can checkout via  Apple Pay." : ""
-
-        let actionController = ActionSheetController(title: title, message: message)
-        actionController.headerContentAlignment = headerAlignment
-        actionController.actionsContentAlignment = actionsAlignment
-        actionController.cancelConfirmationActionPosition = cancelConfirmationPosition
-        actionController.cancelButtonShouldMatchActionButtonsAlignment = cancelMatchesActionAlignment
-
+extension Action {
+    
+    /// Generates an array of mock actions for demo purposes.
+    ///
+    /// - Parameters:
+    ///     - showIcons: A boolean value to determine whether icons are to be displayed
+    ///
+    static func generateMockActions(showIcons: Bool) -> [Action] {
         let gen1Image = showIcons ? UIImage(systemName: "macpro.gen1") : nil
         let gen2Image = showIcons ? UIImage(systemName: "macpro.gen2") : nil
         let gen3Image = showIcons ? UIImage(systemName: "macpro.gen3") : nil
@@ -45,16 +33,16 @@ extension ActionSheetController {
         }
 
         let newSheetTitle = "Buy All Mac Pro Gens"
+//        let newSheetTitle = " "
         let newSheetMessage = "Are you sure you want to buy all three Mac Pro gens? That's like $45,000."
+//        let newSheetMessage = ""
         let buyAllStyle = Action.Style.hasConfirmation(newSheetTitle: newSheetTitle,
                                                        newSheetMessage: newSheetMessage,
                                                        confirmationActionTitle: "Buy All")
         let buyAllGens = Action(title: "Buy All Mac Pro Gens", style: buyAllStyle, image: allGensImage) { _ in
             print("...Buying all Mac Pro gens")
         }
-
-        [buyGen1Action, buyGen2Action, buyGen3Action, buyAllGens].forEach { actionController.addAction($0) }
-
-        return actionController
+        
+        return [buyGen1Action, buyGen2Action, buyGen3Action, buyAllGens]
     }
 }
