@@ -43,12 +43,7 @@ public class ActionSheetView: ProgrammaticUIView {
     var confirmationAction: Action?
     var confirmationButton: ActionButton?
     
-    private lazy var container: UIView = {
-        let container = UIView().forAutoLayout()
-        container.backgroundColor = .clear
-        container.curveCorners(radius: 20.0)
-        return container
-    }()
+    var cornerRadius: CGFloat = 0.0
     
     private lazy var contentStackView: UIStackView = {
         let stackview = UIStackView().forAutoLayout()
@@ -107,6 +102,7 @@ public class ActionSheetView: ProgrammaticUIView {
     // MARK: -  Layout & Configure
     
     public override func layoutSubviews() {
+        self.roundCornersWithMask(cornerRadius: cornerRadius, corners: [.topCorners])
         contentStackView.addArrangedSubviews([titleLabel, messageLabel])
         determineHeaderContentVisibility()
         contentStackView.addArrangedSubview(divider)

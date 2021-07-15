@@ -90,7 +90,6 @@ class ModalPresentationController: UIPresentationController {
     
     override func containerViewWillLayoutSubviews() {
         super.containerViewWillLayoutSubviews()
-        presentedView!.roundCornersWithMask(cornerRadius: 20.0, corners: [.topCorners])
         presentedView?.frame = frameOfPresentedViewInContainerView
         backgroundView.frame = containerView!.bounds
     }

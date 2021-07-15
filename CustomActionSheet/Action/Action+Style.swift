@@ -15,8 +15,10 @@ extension Action {
         /// Default action style.
         ///
         /// When tapped, the `ActionSheetController` dismisses itself, then runs the action handler.
+        ///
         case `default`
         
+
         /// Cancel action style.
         ///
         /// Cancel style actions work just like default style actions except cancel style actions get put at
@@ -24,8 +26,10 @@ extension Action {
         /// are automatically provided for confirmation actions.
         ///
         /// - Important: Only one cancel action is allowed to be added to an `ActionSheetController`.
+        ///
         case cancel
         
+
         /// A default style action that has a confirmation action attached to it.
         ///
         /// When an action, whose style is `.hasConfirmation(...)`  is initially tapped,
@@ -36,8 +40,12 @@ extension Action {
         ///     - title: Updates the `ActionSheetController`'s title to better match the context for the confirmation.
         ///     - message: Updates the `ActionSheetController`'s message to better match the context for the confirmation.
         ///     - confirmationTitle: The title of the button that sends the action while in a confirmation state. If it is`nil`, the button's title before the confirmation will be used.
+        ///
+        /// - Precondition: A title must be provided via a non-empty string. A fatal error will occur if an empty string is passed in.
+        ///
         case hasConfirmation(newSheetTitle: String, newSheetMessage: String?, confirmationActionTitle: String?)
-        
+
+
         /// Initially displays the the `ActionSheetController` in the confirmation style.
         case isConfirmation
     }

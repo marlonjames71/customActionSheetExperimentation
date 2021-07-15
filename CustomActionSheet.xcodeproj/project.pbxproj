@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		37BB5E7B269EBD8E00C92949 /* ActionSheetController+MockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BB5E7A269EBD8E00C92949 /* ActionSheetController+MockController.swift */; };
+		860754C6269FAF41005B0872 /* Action+MockActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860754C5269FAF41005B0872 /* Action+MockActions.swift */; };
 		86DF0F6E26813D5500F554E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F6D26813D5500F554E4 /* AppDelegate.swift */; };
 		86DF0F7026813D5500F554E4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F6F26813D5500F554E4 /* SceneDelegate.swift */; };
 		86DF0F7226813D5500F554E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DF0F7126813D5500F554E4 /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		37BB5E7A269EBD8E00C92949 /* ActionSheetController+MockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActionSheetController+MockController.swift"; sourceTree = "<group>"; };
+		860754C5269FAF41005B0872 /* Action+MockActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Action+MockActions.swift"; sourceTree = "<group>"; };
 		86DF0F6A26813D5500F554E4 /* CustomActionSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomActionSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86DF0F6D26813D5500F554E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86DF0F6F26813D5500F554E4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		860754C7269FB0A8005B0872 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				37BB5E7A269EBD8E00C92949 /* ActionSheetController+MockController.swift */,
+				860754C5269FAF41005B0872 /* Action+MockActions.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		860754C8269FB0CE005B0872 /* ActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				86DF0F8126813EEB00F554E4 /* ActionSheetController.swift */,
+				86DF0F8A268272EE00F554E4 /* ActionSheetView.swift */,
+			);
+			path = ActionSheet;
+			sourceTree = "<group>";
+		};
 		86DF0F6126813D5500F554E4 = {
 			isa = PBXGroup;
 			children = (
@@ -85,9 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				86DF0F7126813D5500F554E4 /* ViewController.swift */,
-				86DF0F8A268272EE00F554E4 /* ActionSheetView.swift */,
-				86DF0F8126813EEB00F554E4 /* ActionSheetController.swift */,
-				37BB5E7A269EBD8E00C92949 /* ActionSheetController+MockController.swift */,
+				860754C8269FB0CE005B0872 /* ActionSheet */,
+				860754C7269FB0A8005B0872 /* Mock */,
 				86E4C033268CF19200166E11 /* Presentation+Transition */,
 				86E4C031268CF08900166E11 /* Action */,
 				86E4C030268CF05600166E11 /* Helpers */,
@@ -222,6 +241,7 @@
 				37BB5E7B269EBD8E00C92949 /* ActionSheetController+MockController.swift in Sources */,
 				86DF0F91268282AD00F554E4 /* UIView+Helpers.swift in Sources */,
 				86DF0F8226813EEB00F554E4 /* ActionSheetController.swift in Sources */,
+				860754C6269FAF41005B0872 /* Action+MockActions.swift in Sources */,
 				86E4C038269018ED00166E11 /* CustomPresentable.swift in Sources */,
 				86DF0F8F2682820C00F554E4 /* ProgrammaticUIViewController.swift in Sources */,
 				86DF0F872682695500F554E4 /* Action.swift in Sources */,
